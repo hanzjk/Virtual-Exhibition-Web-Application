@@ -13,6 +13,7 @@ public class PaymentResponse {
     private String id;
     private Exhibition exhibition;
     private String userId;
+    private String userType;
     private Float amount;
     private String ticket;
     private String timestamp;

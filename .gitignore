@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+frontend/light-bootstrap-dashboard-react-master/public/avatars/attendeemaleavatar2.gltf
+
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -22,3 +25,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+node_modules/
+
+### service accounts ###
+/services/stall/src/main/resources/serviceAccountKey.json
+/services/auth/src/main/resources/serviceAccountKey.json
+/services/ticket/src/main/resources/serviceAccountKey.json
+/services/exhibition/src/main/resources/serviceAccountKey.json

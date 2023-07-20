@@ -9,6 +9,7 @@ import com.google.cloud.firestore.QuerySnapshot;
 import com.google.firebase.cloud.FirestoreClient;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.ve.auth.controller.LoginRequest;
@@ -38,7 +39,7 @@ public class LoginService {
     public String login(LoginRequest request) throws ExecutionException, InterruptedException {
         boolean isValidEmail = emailValidator.test(request.getEmailAddress());
         if (!isValidEmail){
-            throw new IllegalStateException("email not valid");
+            return "{\"token\":\""+"Invalid Email Format"+"\",\"userRole\":\""+null+"\"  }";
         }
         Firestore firestore = FirestoreClient.getFirestore();
         List<QueryDocumentSnapshot> documents = firestore.collection("users").whereEqualTo("emailAddress", request.getEmailAddress()).get().get().getDocuments();
@@ -48,16 +49,17 @@ public class LoginService {
                 boolean enabled = documents.get(0).getBoolean("enabled");
                 String userRole = documents.get(0).getString("userRole");
                 if(enabled){
-                    return jwtGenerator.generateToken(request.getEmailAddress(), userRole);
+                    var token = jwtGenerator.generateToken(request.getEmailAddress(), userRole);
+                    return "{\"token\":\"" + token + "\",\"userRole\":\"" + userRole + "\"}";
                 }
                 else{
-                    return "Please activate your account first";
+                    return "{\"token\":\""+"Please activate your account first"+"\",\"userRole\":\""+null+"\"  }";
                 }
             }else {
-                return "Invalid Credentials";
+                return "{\"token\":\""+"Invalid Credentials"+"\",\"userRole\":\""+null+"\"  }";
             }
         }else {
-            return "Invalid Credentials";
+            return "{\"token\":\""+"Invalid Credentials"+"\",\"userRole\":\""+null+"\"  }";
         }
     }
 

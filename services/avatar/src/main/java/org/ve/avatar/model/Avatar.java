@@ -17,15 +17,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Avatar {
     @Id
     private String id;
-
     private String userId;
+    private String userType;
     private String avatarId;
     private String  bottomColor;
     private String  topColor;
     private String  shoeColor;
     private String  hairColor;
     private String  beardColor;
-    private String  gender;
 
+    private String  skinColor;
 
 }

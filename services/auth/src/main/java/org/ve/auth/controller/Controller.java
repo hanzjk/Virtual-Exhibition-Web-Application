@@ -10,9 +10,11 @@ import org.ve.auth.model.ExhibitionOwner;
 import org.ve.auth.model.Exhibitor;
 import org.ve.auth.service.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.concurrent.ExecutionException;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping(path = "api/auth")
 @AllArgsConstructor
 public class Controller {
@@ -98,9 +100,9 @@ public class Controller {
     public String delete (@PathVariable("emailAddress") String emailAddress) throws ExecutionException, InterruptedException {
         return authService.deleteUser(emailAddress);
     }
-    @GetMapping(path ="login")
+    @PostMapping(path ="login")
     @ResponseStatus(HttpStatus.OK)
-    public String login(@RequestBody LoginRequest request) throws ExecutionException, InterruptedException {
+    public String login(@RequestBody LoginRequest request, HttpServletResponse response) throws ExecutionException, InterruptedException {
         return loginService.login(request);
     }
 
